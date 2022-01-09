@@ -1,0 +1,40 @@
+<p>Welcome {{userName}}!</p>
+<form [formGroup]="searchForm"></form>
+<div class="p-grid p-fluid">
+
+  <div class="p-col-12 p-md-4">
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon">Text</span>
+      <input #text
+             type="text"
+             pInputText
+             placeholder="Free text"
+             [formControl]="this.searchForm.get('text')">
+    </div>
+  </div>
+  <dl></dl>
+  <div class="p-col-12 p-md-4">
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon">Author</span>
+      <input #author
+             type="text"
+             pInputText
+             placeholder="Author"
+             [formControl]="this.searchForm.get('author')">
+    </div>
+  </div>
+  <dl></dl>
+  <div class="p-col-12 p-md-4">
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon">Title</span>
+      <input #title
+             type="text"
+             pInputText
+             placeholder="Title"
+             [formControl]="this.searchForm.get('title')">
+    </div>
+  </div>
+
+</div>
+
+

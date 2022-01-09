@@ -1,0 +1,28 @@
+<!--<router-outlet></router-outlet>-->
+<h5>Google books library</h5>
+<form [formGroup]="form">
+  <div class="p-grid p-fluid">
+    <div class="p-col-12 p-md-4">
+      <div class="p-inputgroup form-group">
+        <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+        <input
+          id="userName"
+          type="text"
+          pInputText
+          placeholder="Username"
+          formControlName="userName"
+          class="form-control"
+          maxlength="10"
+        ></div>
+      <span class="validation-text" *ngIf="isError('userName')">User Name is required</span>
+    </div>
+  </div>
+</form>
+<dl></dl>
+<button pButton pRipple
+        type="button"
+        label="Primary"
+        class="p-button-raised"
+        (click)="onClick()"
+></button>
+
