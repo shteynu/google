@@ -64,7 +64,8 @@
     <tr *ngFor="let book of bookResult" (click)="onRowClick($event, book.id)">
       <td>{{book.title}}</td>
       <td>{{book.subtitle}}</td>
-      <td><img [src]="book.imageLinks && book.imageLinks.thumbnail" alt="book.imageLinks.thumbnail" width="100" class="p-shadow-4"  /></td>
+      <td><img *ngIf="book.imageLinks && book.imageLinks.thumbnail" [src]="book.imageLinks.thumbnail"
+               alt="book.imageLinks.thumbnail" width="50" class="p-shadow-4"  /></td>
       <td>{{book.authors}}</td>
       <td>{{book.publishedDate}}</td>
       <td>{{book.language}}</td>

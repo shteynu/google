@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {SearchModel} from '../model/searchModel';
 import {Observable, Subject, Subscribable, throwError} from 'rxjs';
 import {catchError, map, tap} from 'rxjs/operators';
@@ -8,14 +8,13 @@ import {PAGE_SIZE} from '../constants/constants';
 @Injectable({
   providedIn: 'root'
 })
-export class DataExchangeService {
+export class DataExchangeService{
 
   // tslint:disable-next-line:variable-name
   private _userName: string;
   private url: string;
   public allItems: Array<any>;
-  private displayPopUp: Subject<boolean> = new Subject<boolean>();
-  private myWishList: Array<any>;
+  private readonly displayPopUp: Subject<boolean> = new Subject<boolean>();
 
   constructor(private http: HttpClient) {
     this.url = 'https://www.googleapis.com/books/v1/volumes?q=';

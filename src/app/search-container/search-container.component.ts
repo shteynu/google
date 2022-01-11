@@ -1,9 +1,9 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {DataExchangeService} from '../services/data-exchange.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {debounceTime, map, shareReplay, switchMap, tap} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {debounceTime, distinctUntilChanged, map, startWith, switchMap, tap} from 'rxjs/operators';
+import {concat, Observable} from 'rxjs';
 import {SearchModel} from '../model/searchModel';
 import {BookModel} from '../model/bookModel';
 
@@ -22,7 +22,8 @@ export class SearchContainerComponent implements OnInit, AfterViewInit {
 
   constructor(private router: Router,
               private dataService: DataExchangeService,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder) {
+  }
 
   ngOnInit(): void {
     this.userName = this.dataService.userName;
@@ -37,11 +38,15 @@ export class SearchContainerComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.books$ = this.searchForm.valueChanges.pipe(
+     const books$ = this.searchForm.valueChanges.pipe(
       debounceTime(400),
       tap(val => console.log(val)),
       switchMap((value: SearchModel) => this.loadBooks(value)),
     );
+
+     const initialBooks$ = this.loadBooks({text: '', author: '', title: ''});
+
+     this.books$ = concat(initialBooks$, books$);
   }
 
   loadBooks(search: SearchModel): Observable<BookModel[]>{
@@ -65,4 +70,5 @@ export class SearchContainerComponent implements OnInit, AfterViewInit {
   openWishList(event: any): void {
     this.router.navigate(['wishlist']);
   }
+
 }
