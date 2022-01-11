@@ -1,4 +1,5 @@
 export interface BookModel {
+  id: string;
   title: string;
   subtitle: string;
   authors: Array<string>;

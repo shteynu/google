@@ -13,12 +13,20 @@ import {SearchContainerComponent} from './search-container/search-container.comp
 import {RouterModule, Routes} from '@angular/router';
 import {UserComponent} from './user/user.component';
 import {HttpClientModule} from '@angular/common/http';
+import {TableModule} from 'primeng/table';
+import {ConfirmationService, MessageService, SharedModule} from 'primeng/api';
+import { DetailsDialogBoxComponent } from './details-dialog-box/details-dialog-box.component';
+import {DialogModule} from 'primeng/dialog';
+import { WishlistContainerComponent } from './wishlist-container/wishlist-container.component';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ActivateGuard} from './activate.guard';
 
 const appRoutes: Routes = [
   { path: '', component: UserComponent},
-  { path: 'user', component: UserComponent},
-  { path: 'search', component: SearchContainerComponent},
-  { path: '**', redirectTo: '/', pathMatch: 'full' }
+  { path: 'user', component: UserComponent, canActivate: [ActivateGuard]},
+  { path: 'search', component: SearchContainerComponent, canActivate: [ActivateGuard]},
+  { path: 'wishlist', component: WishlistContainerComponent, canActivate: [ActivateGuard]},
+  { path: '**', redirectTo: '/'}
 ];
 
 
@@ -27,22 +35,28 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     SearchContainerComponent,
-    UserComponent
+    UserComponent,
+    DetailsDialogBoxComponent,
+    WishlistContainerComponent,
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        InputTextModule,
-        CheckboxModule,
-        ButtonModule,
-        RadioButtonModule,
-        RippleModule,
-        FormsModule,
-        ReactiveFormsModule,
-      HttpClientModule,
-      RouterModule.forRoot(appRoutes)
-    ],
-  providers: [],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    InputTextModule,
+    CheckboxModule,
+    ButtonModule,
+    RadioButtonModule,
+    RippleModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    RouterModule.forRoot(appRoutes),
+    TableModule,
+    SharedModule,
+    DialogModule,
+    ConfirmDialogModule,
+  ],
+  providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

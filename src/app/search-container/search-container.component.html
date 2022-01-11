@@ -1,8 +1,8 @@
-<p>Welcome {{userName}}!</p>
-<form [formGroup]="searchForm"></form>
-<div class="p-grid p-fluid">
+<h5 style="font-size: 1vmax">Welcome {{userName}}!</h5>
+<form [formGroup]="searchForm">
+<div  class="p-grid p-fluid">
 
-  <div class="p-col-12 p-md-4">
+  <div style="display: inline-block">
     <div class="p-inputgroup">
       <span class="p-inputgroup-addon">Text</span>
       <input #text
@@ -12,8 +12,8 @@
              [formControl]="this.searchForm.get('text')">
     </div>
   </div>
-  <dl></dl>
-  <div class="p-col-12 p-md-4">
+
+  <div style="display: inline-block; padding-left: 1em">
     <div class="p-inputgroup">
       <span class="p-inputgroup-addon">Author</span>
       <input #author
@@ -23,8 +23,8 @@
              [formControl]="this.searchForm.get('author')">
     </div>
   </div>
-  <dl></dl>
-  <div class="p-col-12 p-md-4">
+
+  <div style="display: inline-block; padding-left: 1em">
     <div class="p-inputgroup">
       <span class="p-inputgroup-addon">Title</span>
       <input #title
@@ -36,5 +36,43 @@
   </div>
 
 </div>
+</form>
 
+<dl></dl>
+
+<div style="display: inline-block">
+  <p-button label="My wishlist"
+            (onClick)="openWishList($event)">
+
+  </p-button>
+</div>
+<dl></dl>
+
+<div style="overflow-x:auto;">
+<table *ngIf="(books$ | async) as bookResult">
+
+    <tr>
+      <th>Title</th>
+      <th>Subtitle</th>
+      <th>Book cover</th>
+      <th>Authors</th>
+      <th>Published</th>
+      <th>Language</th>
+      <th>Categories</th>
+    </tr>
+
+    <tr *ngFor="let book of bookResult" (click)="onRowClick($event, book.id)">
+      <td>{{book.title}}</td>
+      <td>{{book.subtitle}}</td>
+      <td><img [src]="book.imageLinks && book.imageLinks.thumbnail" alt="book.imageLinks.thumbnail" width="100" class="p-shadow-4"  /></td>
+      <td>{{book.authors}}</td>
+      <td>{{book.publishedDate}}</td>
+      <td>{{book.language}}</td>
+      <td>{{book.categories}}</td>
+    </tr>
+
+</table>
+</div>
+
+<app-details-dialog-box [bookId]="bookId"></app-details-dialog-box>
 
